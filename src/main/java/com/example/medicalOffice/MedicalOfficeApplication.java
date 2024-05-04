@@ -16,7 +16,7 @@ public class MedicalOfficeApplication {
 
 	@GetMapping
 	public String apiRoot(){
-		return "Hello, World!!";
+		return "Hello, World!";
 	}
 
 }
