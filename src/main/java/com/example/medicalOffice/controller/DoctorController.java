@@ -38,6 +38,7 @@ public class DoctorController {
     public Doctor updateDoctor(@PathVariable ObjectId id, @RequestBody Doctor updatedDoctor) {
         updatedDoctor.setId(id);
         return doctorRepository.save(updatedDoctor);
+
     }
 
     @DeleteMapping("/{id}")
