@@ -10,7 +10,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/doctors")
-
 public class DoctorController {
     private final DoctorRepository doctorRepository;
 

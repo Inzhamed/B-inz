@@ -5,30 +5,29 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "Doctor")
-
-    public class Doctor {
+public class Doctor {
     @Id
     private ObjectId id;
-    private String Nom;
-    private String Prenom;
-    private String Specialité;
-    private String Adresse;
-    private int Num_Tel;
-    private String Email;
-    private String Mdps;
-
-    public Doctor(ObjectId id, String nom, String prenom, String specialité, String adresse, int num_Tel, String email, String mdps) {
-        this.id = id;
-        Nom = nom;
-        Prenom = prenom;
-        Specialité = specialité;
-        Adresse = adresse;
-        Num_Tel = num_Tel;
-        Email = email;
-        Mdps = mdps;
-    }
+    private String nom;
+    private String prenom;
+    private String specialite;
+    private String adresse;
+    private String num_Tel;
+    private String email;
+    private String mdps;
 
     public Doctor() {
+    }
+
+    public Doctor(ObjectId id, String nom, String prenom, String specialite, String adresse, String num_Tel, String email, String mdps) {
+        this.id = id;
+        this.nom = nom;
+        this.prenom = prenom;
+        this.specialite = specialite;
+        this.adresse = adresse;
+        this.num_Tel = num_Tel;
+        this.email = email;
+        this.mdps = mdps;
     }
 
     public ObjectId getId() {
@@ -40,59 +39,58 @@ import org.springframework.data.mongodb.core.mapping.Document;
     }
 
     public String getNom() {
-        return Nom;
+        return nom;
     }
 
     public void setNom(String nom) {
-        Nom = nom;
+        this.nom = nom;
     }
 
     public String getPrenom() {
-        return Prenom;
+        return prenom;
     }
 
     public void setPrenom(String prenom) {
-        Prenom = prenom;
+        this.prenom = prenom;
     }
 
-    public String getSpecialité() {
-        return Specialité;
+    public String getSpecialite() {
+        return specialite;
     }
 
-    public void setSpecialité(String specialité) {
-        Specialité = specialité;
+    public void setSpecialite(String specialite) {
+        this.specialite = specialite;
     }
 
     public String getAdresse() {
-        return Adresse;
+        return adresse;
     }
 
     public void setAdresse(String adresse) {
-        Adresse = adresse;
+        this.adresse = adresse;
     }
 
-    public int getNum_Tel() {
-        return Num_Tel;
+    public String getNum_Tel() {
+        return num_Tel;
     }
 
-    public void setNum_Tel(int num_Tel) {
-        Num_Tel = num_Tel;
+    public void setNum_Tel(String num_Tel) {
+        this.num_Tel = num_Tel;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getMdps() {
-        return Mdps;
+        return mdps;
     }
 
     public void setMdps(String mdps) {
-        Mdps = mdps;
+        this.mdps = mdps;
     }
 }
-
