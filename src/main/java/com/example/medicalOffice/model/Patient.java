@@ -12,6 +12,7 @@ public class Patient {
     private String lastName;
 
     public Patient() {
+
     }
 
     public Patient(ObjectId id, String firstName, String lastName) {
