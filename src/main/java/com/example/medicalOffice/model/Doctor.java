@@ -4,30 +4,34 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 @Document(collection = "Doctor")
 public class Doctor {
     @Id
     private ObjectId id;
-    private String nom;
-    private String prenom;
-    private String specialite;
-    private String adresse;
-    private String num_Tel;
+    private String firstName;
+    private String lastName;
+    private Date birthDate;
+    private String speciality;
+    private String address;
+    private String phoneNum;
     private String email;
-    private String mdps;
+    private String password;
 
     public Doctor() {
     }
 
-    public Doctor(ObjectId id, String nom, String prenom, String specialite, String adresse, String num_Tel, String email, String mdps) {
+    public Doctor(ObjectId id, String firstName, String lastName, Date birthDate, String speciality, String address, String phoneNum, String email, String password) {
         this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.specialite = specialite;
-        this.adresse = adresse;
-        this.num_Tel = num_Tel;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthDate = birthDate;
+        this.speciality = speciality;
+        this.address = address;
+        this.phoneNum = phoneNum;
         this.email = email;
-        this.mdps = mdps;
+        this.password = password;
     }
 
     public ObjectId getId() {
@@ -38,44 +42,52 @@ public class Doctor {
         this.id = id;
     }
 
-    public String getNom() {
-        return nom;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getPrenom() {
-        return prenom;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getSpecialite() {
-        return specialite;
+    public Date getBirthDate() {
+        return birthDate;
     }
 
-    public void setSpecialite(String specialite) {
-        this.specialite = specialite;
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
     }
 
-    public String getAdresse() {
-        return adresse;
+    public String getSpeciality() {
+        return speciality;
     }
 
-    public void setAdresse(String adresse) {
-        this.adresse = adresse;
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
     }
 
-    public String getNum_Tel() {
-        return num_Tel;
+    public String getAddress() {
+        return address;
     }
 
-    public void setNum_Tel(String num_Tel) {
-        this.num_Tel = num_Tel;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNum() {
+        return phoneNum;
+    }
+
+    public void setPhoneNum(String phoneNum) {
+        this.phoneNum = phoneNum;
     }
 
     public String getEmail() {
@@ -86,11 +98,12 @@ public class Doctor {
         this.email = email;
     }
 
-    public String getMdps() {
-        return mdps;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMdps(String mdps) {
-        this.mdps = mdps;
+    public void setPassword(String password) {
+        this.password = password;
     }
+
 }
