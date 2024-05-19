@@ -1,4 +1,3 @@
----
 # Medical Management System
 
 This project is a Doctor Management System that provides functionality for managing doctor profiles, patient information, appointments, and more. The project is divided into two main parts: the frontend and the backend.
@@ -121,6 +120,3 @@ Contributions are welcome! Please follow these steps to contribute:
 3. Commit your changes (`git commit -m 'Add your feature'`).
 4. Push to the branch (`git push origin feature/your-feature`).
 5. Open a pull request.
-
-
----
