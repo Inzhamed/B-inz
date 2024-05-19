@@ -23,16 +23,12 @@ The repository is structured as follows:
 ├── frontend
 │   ├── public
 │   ├── src
-│   ├── .env
 │   ├── package.json
 │   ├── package-lock.json
-│   ├── README.md
 │   └── ...
 ├── backend
 │   ├── src
 │   ├── pom.xml
-│   ├── .env
-│   ├── README.md
 │   └── ...
 └── README.md
 ```
