@@ -1,24 +1,29 @@
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+// Appointments.jsx
+import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
-import Home1 from "../assets/homelogo.svg";
-import PatientIcon from "../assets/patient.svg";
+import Homelogo from "../assets/homelogo.svg";
+import Patient from "../assets/patient.svg";
 import Folder from "../assets/folder.svg";
 import Calendar from "../assets/calendar.svg";
 import Logout from "../assets/logout.svg";
 import Bell from "../assets/bell.svg";
 import Avatar from "../assets/avatar.svg";
 import ArrowDown from "../assets/arrowdown.svg";
+import AddAppointmentPopup from "./AddAppointmentPopup";
 import { useState, useEffect } from "react";
 
-const Home = () => {
+const Appointments = () => {
   const [hover, setHover] = useState(false);
   const doctorEmail = localStorage.getItem("doctorEmail");
   const url = "http://localhost:8080/api/doctors";
-  const url1 = "http://localhost:8080/api/patients";
   const url2 = "http://localhost:8080/api/appointments";
   const [doctorData, setDoctorData] = useState({});
-  const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   const handleRefresh = async () => {
     const response = await fetch(url, {
@@ -28,27 +33,10 @@ const Home = () => {
       },
     });
     const data = await response.json();
-
     const doctor = data.find((doctor) => doctor.email === doctorEmail);
-
     if (doctor) {
       setDoctorData(doctor);
     }
-  };
-
-  const handleRefresh1 = async () => {
-    const response = await fetch(url1, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-
-    const filteredPatients = data.filter(
-      (patient) => patient.doctorEmail === doctorEmail
-    );
-    setPatients(filteredPatients);
   };
 
   const handleRefresh2 = async () => {
@@ -59,7 +47,6 @@ const Home = () => {
       },
     });
     const data = await response.json();
-
     const filteredAppointments = data.filter(
       (appointment) => appointment.doctorEmail === doctorEmail
     );
@@ -68,7 +55,6 @@ const Home = () => {
 
   useEffect(() => {
     handleRefresh();
-    handleRefresh1();
     handleRefresh2();
   }, []);
 
@@ -95,7 +81,7 @@ const Home = () => {
           <ul className="flex flex-col items-center">
             <li className="mb-7 ">
               <Link to="/home" className="flex py-2 px-4 items-center">
-                <img src={Home1} alt="Homelogo" className="h-8 w-8 " />
+                <img src={Homelogo} alt="Homelogo" className="h-8 w-8 " />
                 <p
                   className={`ml-5 text-xl font-bold ${
                     hover ? "block " : "hidden"
@@ -107,7 +93,7 @@ const Home = () => {
             </li>
             <li className="mb-7">
               <Link to="/patients" className="flex py-2 px-4 items-center">
-                <img src={PatientIcon} alt="Patient" className="h-8 w-8" />
+                <img src={Patient} alt="Patient" className="h-8 w-8" />
                 <p
                   className={`ml-5 text-xl font-bold ${
                     hover ? "block " : "hidden"
@@ -163,100 +149,62 @@ const Home = () => {
       <div className="flex-1">
         <div className="flex justify-between">
           <div className="ml-14 mt-11">
-            <h2 className="text-2xl">Welcome</h2>
             <h3 className="text-indigo-800 text-3xl font-semibold">
               Dr. {doctorData.firstName} {doctorData.lastName}!
             </h3>
             <p className="text-neutral-500 text-lg mt-1">
-              Here are your recent Updates{" "}
+              Here are all your Appointments
             </p>
           </div>
           <div className="flex gap-5 mr-6">
             <img className="mr-6" src={Bell} alt="Bell" />
             <img src={Avatar} alt="avatar" />
-            <p className="mt-10">
-              Dr. {doctorData.firstName} {doctorData.lastName}
+            <p className="mt-8">
+              {doctorData.firstName} {doctorData.lastName}
             </p>
-            <img src={ArrowDown} alt="arrowdown" />
+            <img className="mt-5" src={ArrowDown} alt="arrowdown" />
           </div>
         </div>
-        <div className="flex justify-around my-10">
-          <div className="w-[50rem] h-96 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9">
-            <h1 className="text-2xl font-semibold mb-7">
-              Upcoming Appointments
-            </h1>
-            {appointments.map((appointment) => (
-              <div
-                key={appointment.id.timestamp}
-                className="w-[41rem] h-9 flex gap-24 mt-4"
-              >
-                <div className="w-20 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Patient Name
-                  </div>
-                  <div className="w-80 text-black text-xs font-medium">
+        <div className="overflow-x-auto ml-12 mt-20 mr-10">
+          <table className="w-full whitespace-nowrap table-auto">
+            <thead className="bg-neutral-200 text-neutral-600 text-sm font-semibold h-16">
+              <tr>
+                <th className="px-6 py-3 text-left">Patient Name</th>
+                <th className="px-6 py-3 text-left">Date and Time</th>
+                <th className="px-6 py-3 text-left">Reason</th>
+                <th className="px-6 py-3 text-left"></th>
+              </tr>
+            </thead>
+            <tbody>
+              {appointments.map((appointment) => (
+                <tr
+                  key={appointment.id}
+                  className="h-20 text-sm text-neutral-500 border-b"
+                >
+                  <td className="px-6 py-3 text-left">
                     {appointment.patientName}
-                  </div>
-                </div>
-                <div className="w-20 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Date
-                  </div>
-                  <div className="w-20 text-xs font-medium">
-                    {new Date(appointment.date).toLocaleDateString()}
-                  </div>
-                </div>
-                <div className="w-20 h-9 flex-col gap-1flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Time
-                  </div>
-                  <div className="w-20 text-black text-xs font-medium">
-                    {new Date(appointment.date).toLocaleTimeString()}
-                  </div>
-                </div>
-                <div className="w-80 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Reason
-                  </div>
-                  <div className="w-20 text-black text-xs font-medium">
-                    {appointment.reason}
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-center mt-16">
-              <Link to="/Calendar">
-                <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
-                  View All Appointments
-                </button>
-              </Link>
-            </div>
-          </div>
-          <div className="w-[38rem] h-96 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9">
-            <h1 className=" text-2xl font-semibold mb-3">Recent Patients</h1>
-            {patients.map((patient) => (
-              <div
-                key={patient.id}
-                className="flex items-center gap-5 w-60 h-12 mt-4"
-              >
-                <img className="w-10" src={Avatar} alt="avatar" />
-                <p className="text-zinc-800 text-lg font-semibold">
-                  {patient.firstName} {patient.lastName}
-                </p>
-              </div>
-            ))}
-            <div className="flex justify-center mt-16">
-              <Link to="/patients">
-                <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
-                  View All Patients
-                </button>
-              </Link>
-            </div>
-          </div>
+                  </td>
+                  <td className="px-6 py-3 text-left">
+                    {new Date(appointment.date).toLocaleString()}
+                  </td>
+                  <td className="px-6 py-3 text-left">{appointment.reason}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex justify-end mr-12 mt-5">
+          <button
+            onClick={togglePopup}
+            className="bg-indigo-800 text-white py-2 px-4 rounded"
+          >
+            Add Appointment
+          </button>
         </div>
       </div>
+      <AddAppointmentPopup show={showPopup} handleClose={togglePopup} />
     </div>
   );
 };
 
-export default Home;
+export default Appointments;

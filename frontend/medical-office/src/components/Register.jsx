@@ -21,6 +21,9 @@ const Register = () => {
 
   const handleInput = (event) => {
     // Directly modify the formData object
+    if (event.target.name === "email") {
+      event.target.value = event.target.value.toLowerCase();  
+    }
     formData[event.target.name] = event.target.value;
   };
 
@@ -36,7 +39,7 @@ const Register = () => {
       .then((response) => response.json())
       .then((data) => console.log(data))
       .catch((error) => alert("Error:", error.message));
-    navigate("/home");
+    navigate("/");
   };
 
   return (
@@ -48,17 +51,13 @@ const Register = () => {
       />
       <div className="flex flex-col justify-center w-full md:w-5/12 p-5 md:p-0 md:self-center">
         {" "}
-        {/* Adjusted width and added max-width */}
         <div className="flex items-center mb-5">
           <img className="w-10 h-14 mr-3" src={Logo} alt="logo" />{" "}
-          {/* Adjusted logo size */}
           <div>
-            <h1 className="text-xl md:text-2xl font-semibold">B-inz health</h1>{" "}
-            {/* Smaller title */}
+            <h1 className="text-xl md:text-2xl font-semibold">B-inz Health</h1>{" "}
             <p className="text-zinc-600 text-xs md:text-sm">
               Keep Track of your patients!
             </p>{" "}
-            {/* Smaller text */}
           </div>
         </div>
         <h2 className="text-xl md:text-2xl font-semibold">Welcome Doctor!</h2>
@@ -97,8 +96,8 @@ const Register = () => {
             className="bg-neutral-100 rounded-md border border-neutral-500 text-neutral-500 text-base md:text-xl py-2 pl-3"
           />
           <input
-            type="password"
             required
+            type="password"
             id="password"
             name="password"
             onChange={(e) => handleInput(e)}
@@ -116,7 +115,7 @@ const Register = () => {
               className="bg-neutral-100 rounded-md border border-neutral-500 text-neutral-500 text-base md:text-xl py-2 pl-3 md:w-1/2"
             />
             <input
-              type="text"
+              type="date"
               required
               onChange={(e) => handleInput(e)}
               id="birthDate"
@@ -135,7 +134,7 @@ const Register = () => {
             className="bg-neutral-100 rounded-md border border-neutral-500 text-neutral-500 text-base md:text-xl py-2 pl-3"
           />
           <input
-            type="text"
+            type="number"
             id="phoneNum"
             required
             name="phoneNum"
