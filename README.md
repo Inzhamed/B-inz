@@ -11,11 +11,8 @@ This project is a Medical Management System that provides functionality for mana
     - [Prerequisites](#prerequisites)
     - [Installation](#installation)
   - [Running the Application](#running-the-application)
-    - [Running the Backend](#running-the-backend)
-    - [Running the Frontend](#running-the-frontend)
   - [Features](#features)
   - [Contributing](#contributing)
-  - [License](#license)
 
 ## Project Structure
 
