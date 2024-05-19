@@ -8,6 +8,7 @@ import Logout from "../assets/logout.svg";
 import Bell from "../assets/bell.svg";
 import Avatar from "../assets/avatar.svg";
 import ArrowDown from "../assets/arrowdown.svg";
+import Consultation from "../assets/stethoscope.svg";
 import { useState, useEffect } from "react";
 
 const Home = () => {
@@ -16,9 +17,11 @@ const Home = () => {
   const url = "http://localhost:8080/api/doctors";
   const url1 = "http://localhost:8080/api/patients";
   const url2 = "http://localhost:8080/api/appointments";
+  const url3 = "http://localhost:8080/api/consultations";
   const [doctorData, setDoctorData] = useState({});
   const [patients, setPatients] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const [consultations, setConsultations] = useState([]);
 
   const handleRefresh = async () => {
     const response = await fetch(url, {
@@ -66,10 +69,25 @@ const Home = () => {
     setAppointments(filteredAppointments);
   };
 
+  const handleRefresh3 = async () => {
+    const response = await fetch(url3, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    const filteredConsultations = data.filter(
+      (consultation) => consultation.doctorEmail === doctorEmail
+    );
+    setConsultations(filteredConsultations);
+  };
+
   useEffect(() => {
     handleRefresh();
     handleRefresh1();
     handleRefresh2();
+    handleRefresh3();
   }, []);
 
   return (
@@ -118,6 +136,18 @@ const Home = () => {
               </Link>
             </li>
             <li className="mb-7">
+              <Link to="/consultation" className="flex py-2 px-4 items-center">
+                <img src={Consultation} alt="Folder" className="h-8 w-8 " />
+                <p
+                  className={`ml-5 text-xl font-bold ${
+                    hover ? "block " : "hidden"
+                  }`}
+                >
+                  Consultations
+                </p>
+              </Link>
+            </li>
+            <li className="mb-7">
               <Link to="/calendar" className="flex py-2 px-4 items-center">
                 <img src={Calendar} alt="Calendar" className="h-8 w-8" />
                 <p
@@ -129,7 +159,7 @@ const Home = () => {
                 </p>
               </Link>
             </li>
-            <li>
+            <li className="mb-7">
               <Link to="/record" className="flex py-2 px-4 items-center">
                 <img src={Folder} alt="Folder" className="h-8 w-8 " />
                 <p
@@ -137,7 +167,7 @@ const Home = () => {
                     hover ? "block " : "hidden"
                   }`}
                 >
-                  Medical Record
+                  Medical Records
                 </p>
               </Link>
             </li>
@@ -162,7 +192,7 @@ const Home = () => {
       </div>
       <div className="flex-1">
         <div className="flex justify-between">
-          <div className="ml-14 mt-11">
+          <div className="ml-14 mt-3">
             <h2 className="text-2xl">Welcome</h2>
             <h3 className="text-indigo-800 text-3xl font-semibold">
               Dr. {doctorData.firstName} {doctorData.lastName}!
@@ -180,21 +210,21 @@ const Home = () => {
             <img src={ArrowDown} alt="arrowdown" />
           </div>
         </div>
-        <div className="flex justify-around my-10">
-          <div className="w-[50rem] h-96 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9">
+        <div className="flex justify-around mt-6 flex-wrap">
+          <div className="w-[30rem] h-60 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9 basis-1/2 ">
             <h1 className="text-2xl font-semibold mb-7">
               Upcoming Appointments
             </h1>
             {appointments.map((appointment) => (
               <div
                 key={appointment.id.timestamp}
-                className="w-[41rem] h-9 flex gap-24 mt-4"
+                className="w-[41rem] h-9 flex gap-16 mt-4"
               >
                 <div className="w-20 h-9 flex-col gap-1 flex">
                   <div className="text-zinc-400 text-xs font-semibold">
                     Patient Name
                   </div>
-                  <div className="w-80 text-black text-xs font-medium">
+                  <div className="w-20 text-black text-xs font-medium">
                     {appointment.patientName}
                   </div>
                 </div>
@@ -214,7 +244,7 @@ const Home = () => {
                     {new Date(appointment.date).toLocaleTimeString()}
                   </div>
                 </div>
-                <div className="w-80 h-9 flex-col gap-1 flex">
+                <div className="w-20 h-9 flex-col gap-1 flex">
                   <div className="text-zinc-400 text-xs font-semibold">
                     Reason
                   </div>
@@ -232,7 +262,7 @@ const Home = () => {
               </Link>
             </div>
           </div>
-          <div className="w-[38rem] h-96 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9">
+          <div className="w-[30rem] h-60 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9 basis-1/2">
             <h1 className=" text-2xl font-semibold mb-3">Recent Patients</h1>
             {patients.map((patient) => (
               <div
@@ -249,6 +279,104 @@ const Home = () => {
               <Link to="/patients">
                 <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
                   View All Patients
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="w-[30rem] h-60 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9 basis-1/2 ">
+            <h1 className="text-2xl font-semibold mb-7">
+              Recent Consultations
+            </h1>
+            {consultations.map((consultation) => (
+              <div
+                key={consultation.id.timestamp}
+                className="w-[41rem] h-9 flex gap-16 mt-4"
+              >
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Date
+                  </div>
+                  <div className="w-20 text-xs font-medium">
+                    {new Date(consultation.date).toLocaleDateString()}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Time
+                  </div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {new Date(consultation.date).toLocaleTimeString()}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Diagnosis
+                  </div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {consultation.diagnosis}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Medications
+                  </div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {consultation.medications.join(", ")}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="flex justify-center mt-16">
+              <Link to="/consultation">
+                <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
+                  View All Consultations
+                </button>
+              </Link>
+            </div>
+          </div>
+          <div className="w-[30rem] h-60 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9 basis-1/2 ">
+            <h1 className="text-2xl font-semibold mb-7">Medical Records</h1>
+            {patients.map((patient) => (
+              <div
+                key={patient.id.timestamp}
+                className="w-[41rem] h-9 flex gap-16 mt-4"
+              >
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Patient Name
+                  </div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {patient.firstName} {patient.lastName}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Phone Number
+                  </div>
+                  <div className="w-20 text-xs font-medium">
+                    {patient.phoneNum}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1flex">
+                  <div className="text-zinc-400 text-xs font-semibold">Age</div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {patient.age}
+                  </div>
+                </div>
+                <div className="w-20 h-9 flex-col gap-1 flex">
+                  <div className="text-zinc-400 text-xs font-semibold">
+                    Allergies
+                  </div>
+                  <div className="w-20 text-black text-xs font-medium">
+                    {patient.allergies.join(", ")}
+                  </div>
+                </div>
+              </div>
+            ))}
+            <div className="flex justify-center mt-16">
+              <Link to="/record">
+                <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
+                  View All Medical Records
                 </button>
               </Link>
             </div>

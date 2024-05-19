@@ -16,7 +16,6 @@ public class Patient {
     private String age;
     private String phoneNum;
     private String doctorEmail;
-    private ObjectId doctorId;
     private List<String> allergies;
 
     public Patient() {
@@ -30,7 +29,6 @@ public class Patient {
         this.age = age;
         this.phoneNum = phoneNum;
         this.doctorEmail = doctorEmail;
-        this.doctorId = doctorId;
         this.allergies = allergies;
     }
 
@@ -80,14 +78,6 @@ public class Patient {
 
     public void setDoctorEmail(String doctorEmail) {
         this.doctorEmail = doctorEmail;
-    }
-
-    public ObjectId getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(ObjectId doctorId) {
-        this.doctorId = doctorId;
     }
 
     public List<String> getAllergies() {

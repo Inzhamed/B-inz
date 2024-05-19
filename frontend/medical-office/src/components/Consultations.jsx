@@ -1,29 +1,32 @@
+// Consultations.jsx
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.svg";
-import Home from "../assets/homelogo.svg";
-import PatientIcon from "../assets/patient.svg";
+import Homelogo from "../assets/homelogo.svg";
+import Patient from "../assets/patient.svg";
 import Folder from "../assets/folder.svg";
 import Calendar from "../assets/calendar.svg";
 import Logout from "../assets/logout.svg";
 import Bell from "../assets/bell.svg";
 import Avatar from "../assets/avatar.svg";
 import ArrowDown from "../assets/arrowdown.svg";
-import AddPatientPopup from "./Popus/AddPatientPopup";
 import Consultation from "../assets/stethoscope.svg";
+import AddConsultationPopup from "./Popus/AddConsultationPopup";
 import { useState, useEffect } from "react";
 
-const Patients = () => {
-  const [showPopup, setShowPopup] = useState(false);
-  const togglePopup = () => {
-    setShowPopup(!showPopup);
-  };
+const Consultations = () => {
   const [hover, setHover] = useState(false);
   const doctorEmail = localStorage.getItem("doctorEmail");
   const url = "http://localhost:8080/api/doctors";
-  const url1 = "http://localhost:8080/api/patients";
-
+  const url2 = "http://localhost:8080/api/consultations";
+  const url3 = "http://localhost:8080/api/patients";
   const [doctorData, setDoctorData] = useState({});
+  const [consultations, setConsultations] = useState([]);
   const [patients, setPatients] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
+
+  const togglePopup = () => {
+    setShowPopup(!showPopup);
+  };
 
   const handleRefresh = async () => {
     const response = await fetch(url, {
@@ -39,8 +42,21 @@ const Patients = () => {
     }
   };
 
-  const handleRefresh1 = async () => {
-    const response = await fetch(url1, {
+  const handleRefresh2 = async () => {
+    const response = await fetch(url2, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+    const filteredConsultations = data.filter(
+      (consultation) => consultation.doctorEmail === doctorEmail
+    );
+    setConsultations(filteredConsultations);
+  };
+  const handleRefresh3 = async () => {
+    const response = await fetch(url3, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,8 +71,15 @@ const Patients = () => {
 
   useEffect(() => {
     handleRefresh();
-    handleRefresh1();
+    handleRefresh2();
+    handleRefresh3();
   }, []);
+
+  // Create a map of patient phone numbers to their names
+  const patientMap = patients.reduce((map, patient) => {
+    map[patient.phoneNum] = `${patient.firstName} ${patient.lastName}`;
+    return map;
+  }, {});
 
   return (
     <div className="flex h-screen">
@@ -81,7 +104,7 @@ const Patients = () => {
           <ul className="flex flex-col items-center">
             <li className="mb-7 ">
               <Link to="/home" className="flex py-2 px-4 items-center">
-                <img src={Home} alt="Homelogo" className="h-8 w-8 " />
+                <img src={Homelogo} alt="Homelogo" className="h-8 w-8 " />
                 <p
                   className={`ml-5 text-xl font-bold ${
                     hover ? "block " : "hidden"
@@ -93,7 +116,7 @@ const Patients = () => {
             </li>
             <li className="mb-7">
               <Link to="/patients" className="flex py-2 px-4 items-center">
-                <img src={PatientIcon} alt="Patient" className="h-8 w-8" />
+                <img src={Patient} alt="Patient" className="h-8 w-8" />
                 <p
                   className={`ml-5 text-xl font-bold ${
                     hover ? "block " : "hidden"
@@ -129,7 +152,7 @@ const Patients = () => {
             </li>
             <li className="mb-7">
               <Link to="/record" className="flex py-2 px-4 items-center">
-                <img src={Folder} alt="Folder" className="h-8 w-8 " />
+                <img src={Folder} alt="Folder" className="h-8 w-8" />
                 <p
                   className={`ml-5 text-xl font-bold ${
                     hover ? "block " : "hidden"
@@ -158,14 +181,14 @@ const Patients = () => {
           </ul>
         </div>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 bg-neutral-100 h-full overflow-y-auto">
         <div className="flex justify-between">
           <div className="ml-14 mt-11">
             <h3 className="text-indigo-800 text-3xl font-semibold">
               Dr. {doctorData.firstName} {doctorData.lastName}!
             </h3>
             <p className="text-neutral-500 text-lg mt-1">
-              Here are your patients
+              Here are your consultations
             </p>
           </div>
           <div className="flex gap-5 mr-6">
@@ -177,69 +200,52 @@ const Patients = () => {
             <img src={ArrowDown} alt="arrowdown" />
           </div>
         </div>
-        <div className="flex justify-center my-10">
-          <div className="w-[70rem] h-96 bg-neutral-100 rounded-2xl shadow-lg pl-14 pt-9">
-            <h1 className="text-2xl font-semibold mb-7">Patients List</h1>
-            <AddPatientPopup
-              show={showPopup}
-              handleClose={togglePopup}
-              className="w-2/3 h-[32rem] bg-white rounded-2xl shadow"
-            />
-            {patients.map((patient) => (
-              <div key={patient.id} className="w-[41rem] h-9 flex gap-24 mt-4">
-                <div className="w-20 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    First Name
-                  </div>
-                  <div className="w-20 text-xs font-medium">
-                    {patient.firstName}
-                  </div>
-                </div>
-                <div className="w-20 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Last Name
-                  </div>
-                  <div className="w-20 text-black text-xs font-medium">
-                    {patient.lastName}
-                  </div>
-                </div>
-                <div className="w-20 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">Age</div>
-                  <div className="w-20 text-black text-xs font-medium">
-                    {patient.age}
-                  </div>
-                </div>
-                <div className="w-28 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Phone Number
-                  </div>
-                  <div className="w-80 text-black text-xs font-medium">
-                    {patient.phoneNum}
-                  </div>
-                </div>
-                <div className="w-80 h-9 flex-col gap-1 flex">
-                  <div className="text-zinc-400 text-xs font-semibold">
-                    Allergies
-                  </div>
-                  <div className="w-80 text-black text-xs font-medium">
-                    {patient.allergies.join(", ")}
-                  </div>
-                </div>
-              </div>
-            ))}
-            <div className="flex justify-center mt-16">
-              <button
-                className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow"
-                onClick={togglePopup}
-              >
-                Add New Patient
-              </button>
-            </div>
-          </div>
+        <div className="overflow-x-auto ml-12 mt-20 mr-10">
+          <table className="w-full whitespace-nowrap table-auto">
+            <thead className="bg-neutral-200 text-neutral-600 text-sm font-semibold h-16">
+              <tr>
+                <th className="px-6 py-3 text-left">Patient Name</th>
+                <th className="px-6 py-3 text-left">Date</th>
+                <th className="px-6 py-3 text-left">Diagnosis</th>
+                <th className="px-6 py-3 text-left">Medications</th>
+              </tr>
+            </thead>
+            <tbody>
+              {consultations.map((consultation) => (
+                <tr
+                  key={consultation.id}
+                  className="h-20 text-sm text-neutral-500 border-b"
+                >
+                  <td className="px-6 py-3 text-left">
+                    {patientMap[consultation.patientNumber] ||
+                      "Unknown Patient"}
+                  </td>
+                  <td className="px-6 py-3 text-left">
+                    {new Date(consultation.date).toLocaleString()}
+                  </td>
+                  <td className="px-6 py-3 text-left">
+                    {consultation.diagnosis}
+                  </td>
+                  <td className="px-6 py-3 text-left">
+                    {consultation.medications.join(", ")}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex justify-end mr-12 mt-5">
+          <button
+            onClick={togglePopup}
+            className="bg-indigo-800 text-white py-2 px-4 rounded"
+          >
+            Add Consultation
+          </button>
         </div>
       </div>
+      <AddConsultationPopup show={showPopup} handleClose={togglePopup} />
     </div>
   );
 };
 
-export default Patients;
+export default Consultations;

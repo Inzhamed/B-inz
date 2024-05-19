@@ -10,7 +10,6 @@ import java.util.Date;
 public class Appointment {
     @Id
     private ObjectId id;
-    private ObjectId doctorId;
     private String doctorEmail;
     private Date date;
     private String reason;
@@ -21,7 +20,6 @@ public class Appointment {
 
     public Appointment(ObjectId id, ObjectId doctorId, String doctorEmail, Date date, String reason, String patientName) {
         this.id = id;
-        this.doctorId = doctorId;
         this.doctorEmail = doctorEmail;
         this.date = date;
         this.reason = reason;
@@ -34,14 +32,6 @@ public class Appointment {
 
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    public ObjectId getDoctorId() {
-        return doctorId;
-    }
-
-    public void setDoctorId(ObjectId doctorId) {
-        this.doctorId = doctorId;
     }
 
     public Date getDate() {
@@ -68,7 +58,7 @@ public class Appointment {
         this.doctorEmail = doctorEmail;
     }
 
-    public String getPatientName() {    
+    public String getPatientName() {
         return patientName;
     }
 
