@@ -13,9 +13,9 @@ public class Patient {
     private ObjectId id;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private String age;
     private String phoneNum;
-    private String email;
+    private String doctorEmail;
     private ObjectId doctorId;
     private List<String> allergies;
 
@@ -23,13 +23,13 @@ public class Patient {
 
     }
 
-    public Patient(ObjectId id, String firstName, String lastName, Date birthDate, String phoneNum, String email, ObjectId doctorId, List<String> allergies) {
+    public Patient(ObjectId id, String firstName, String lastName, String age, String phoneNum, String doctorEmail, ObjectId doctorId, List<String> allergies) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthDate = birthDate;
+        this.age = age;
         this.phoneNum = phoneNum;
-        this.email = email;
+        this.doctorEmail = doctorEmail;
         this.doctorId = doctorId;
         this.allergies = allergies;
     }
@@ -58,12 +58,12 @@ public class Patient {
         this.lastName = lastName;
     }
 
-    public Date getBirthDate() {
-        return birthDate;
+    public String getAge() {
+        return age;
     }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
+    public void setBirthDate(String age) {
+        this.age = age;
     }
 
     public String getPhoneNum() {
@@ -74,12 +74,12 @@ public class Patient {
         this.phoneNum = phoneNum;
     }
 
-    public String getEmail() {
-        return email;
+    public String getDoctorEmail() {
+        return doctorEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
     }
 
     public ObjectId getDoctorId() {

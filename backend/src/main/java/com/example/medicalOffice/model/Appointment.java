@@ -11,17 +11,21 @@ public class Appointment {
     @Id
     private ObjectId id;
     private ObjectId doctorId;
+    private String doctorEmail;
     private Date date;
     private String reason;
+    private String patientName;
 
     public Appointment() {
     }
 
-    public Appointment(ObjectId id, ObjectId doctorId, Date date, String reason) {
+    public Appointment(ObjectId id, ObjectId doctorId, String doctorEmail, Date date, String reason, String patientName) {
         this.id = id;
         this.doctorId = doctorId;
+        this.doctorEmail = doctorEmail;
         this.date = date;
         this.reason = reason;
+        this.patientName = patientName;
     }
 
     public ObjectId getId() {
@@ -54,5 +58,21 @@ public class Appointment {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getPatientName() {    
+        return patientName;
+    }
+
+    public void setPatientName(String patientName) {
+        this.patientName = patientName;
     }
 }
