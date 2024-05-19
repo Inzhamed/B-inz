@@ -1,6 +1,6 @@
 # Medical Management System
 
-This project is a Doctor Management System that provides functionality for managing doctor profiles, patient information, appointments, and more. The project is divided into two main parts: the frontend and the backend.
+This project is a Medical Management System that provides functionality for managing doctor profiles, patient information, appointments, and more. The project is divided into two main parts: the frontend and the backend.
 
 ## Table of Contents
 - [Medical Management System](#medical-management-system)
