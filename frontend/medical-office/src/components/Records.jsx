@@ -8,6 +8,7 @@
   import Bell from "../assets/bell.svg";
   import Avatar from "../assets/avatar.svg";
   import ArrowDown from "../assets/arrowdown.svg";
+  import Consultation from "../assets/stethoscope.svg";
   import { useState, useEffect } from "react";
 
   const MedicalRecord = () => {
@@ -98,6 +99,21 @@
                 </Link>
               </li>
               <li className="mb-7">
+                <Link
+                  to="/consultation"
+                  className="flex py-2 px-4 items-center"
+                >
+                  <img src={Consultation} alt="Folder" className="h-8 w-8 " />
+                  <p
+                    className={`ml-5 text-xl font-bold ${
+                      hover ? "block " : "hidden"
+                    }`}
+                  >
+                    Consultations
+                  </p>
+                </Link>
+              </li>
+              <li className="mb-7">
                 <Link to="/calendar" className="flex py-2 px-4 items-center">
                   <img src={Calendar} alt="Calendar" className="h-8 w-8" />
                   <p
@@ -109,7 +125,7 @@
                   </p>
                 </Link>
               </li>
-              <li>
+              <li className="mb-7">
                 <Link to="/record" className="flex py-2 px-4 items-center">
                   <img src={Folder} alt="Folder" className="h-8 w-8 " />
                   <p
@@ -117,7 +133,7 @@
                       hover ? "block " : "hidden"
                     }`}
                   >
-                    Medical Record
+                    Medical Records
                   </p>
                 </Link>
               </li>
@@ -210,6 +226,13 @@
                         {patient.allergies.join(", ")}
                       </div>
                     </div>
+                  </div>
+                  <div className="flex justify-center mt-16">
+                    <Link to="/consultation">
+                      <button className="bg-indigo-800 text-white py-2 px-6 rounded-lg shadow">
+                        View All Consultations
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))}

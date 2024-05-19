@@ -11,7 +11,8 @@ import java.util.List;
 public class Consultation {
     @Id
     private ObjectId id;
-    private ObjectId patientId;
+    private String doctorEmail;
+    private String patientNumber;
     private Date date;
     private String diagnosis;
     private List<String> medications;
@@ -19,12 +20,29 @@ public class Consultation {
     public Consultation() {
     }
 
-    public Consultation(ObjectId id, ObjectId patientId, Date date, String diagnosis, List<String> medications) {
+    public Consultation(ObjectId id, String doctorEmail, String patientNumber, Date date, String diagnosis, List<String> medications) {
         this.id = id;
-        this.patientId = patientId;
+        this.doctorEmail = doctorEmail;
+        this.patientNumber = patientNumber;
         this.date = date;
         this.diagnosis = diagnosis;
         this.medications = medications;
+    }
+
+    public String getDoctorEmail() {
+        return doctorEmail;
+    }
+
+    public void setDoctorEmail(String doctorEmail) {
+        this.doctorEmail = doctorEmail;
+    }
+
+    public String getPatientNumber() {
+        return patientNumber;
+    }
+
+    public void setPatientEmail(String patientNumber) {
+        this.patientNumber = patientNumber;
     }
 
     public ObjectId getId() {
@@ -33,14 +51,6 @@ public class Consultation {
 
     public void setId(ObjectId id) {
         this.id = id;
-    }
-
-    public ObjectId getPatientId() {
-        return patientId;
-    }
-
-    public void setPatientId(ObjectId patientId) {
-        this.patientId = patientId;
     }
 
     public Date getDate() {
