@@ -201,13 +201,19 @@ const Home = () => {
               Here are your recent Updates{" "}
             </p>
           </div>
-          <div className="flex gap-5 mr-6">
-            <img className="mr-6" src={Bell} alt="Bell" />
-            <img src={Avatar} alt="avatar" />
-            <p className="mt-10">
+          <div className="flex gap-5 mr-9">
+            <img
+              className="mr-6"
+              src={Bell}
+              alt="Bell"
+              width={24}
+              height={24}
+            />
+            <img src={Avatar} alt="avatar" width={24} height={24} />
+            <p className="mt-11">
               Dr. {doctorData.firstName} {doctorData.lastName}
             </p>
-            <img src={ArrowDown} alt="arrowdown" />
+            <img src={ArrowDown} alt="arrowdown" width={24} height={24} />
           </div>
         </div>
         <div className="flex justify-around mt-6 flex-wrap">
