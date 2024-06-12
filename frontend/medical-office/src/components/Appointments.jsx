@@ -162,20 +162,31 @@ const Appointments = () => {
       <div className="flex-1">
         <div className="flex justify-between">
           <div className="ml-14 mt-11">
-            <h3 className="text-indigo-800 text-3xl font-semibold">
+            <h3 className="text-indigo-800 text-3xl font-semi bold">
               Dr. {doctorData.firstName} {doctorData.lastName}!
             </h3>
             <p className="text-neutral-500 text-lg mt-1">
               Here are all your Appointments
             </p>
           </div>
-          <div className="flex gap-5 mr-6">
-            <img className="mr-6" src={Bell} alt="Bell" />
-            <img src={Avatar} alt="avatar" />
-            <p className="mt-8">
+          <div className="flex gap-5 mr-9">
+            <img
+              className="mr-6"
+              src={Bell}
+              alt="Bell"
+              width={24}
+              height={24}
+            />
+            <img src={Avatar} alt="avatar" width={24} height={24} />
+            <p className="mt-11">
               {doctorData.firstName} {doctorData.lastName}
             </p>
-            <img className="mt-5" src={ArrowDown} alt="arrowdown" />
+            <img
+              src={ArrowDown}
+              alt="arrowdown"
+              width={24}
+              height={24}
+            />
           </div>
         </div>
         <div className="overflow-x-auto ml-12 mt-20 mr-10">
